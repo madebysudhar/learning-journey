@@ -1,6 +1,6 @@
 # Learning Journey
 
-**Goal:** Transform from designer to Caringer engineer.
+**Goal:** Transform from designer to engineer.
 This repo stores daily projects and notes.
 
 ## Day Log
