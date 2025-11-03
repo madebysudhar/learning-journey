@@ -1,0 +1,70 @@
+{
+  "name": "Day 1 – Hello World Webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hello",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "83f46e35-e3d5-4057-a6e8-f0b800634be2",
+      "name": "Webhook",
+      "webhookId": "03f519b8-569c-49ac-ba70-c65088bf84fc"
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "responseKey": "={\"message\":\"Hello, {{ $json.body.name }} from n8n!\"}"
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1db2813a-b3bc-4a6c-bfc6-b844e5d44022",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "26b8f0d3-84f3-49d5-ae9c-0ceb6d5c3516",
+  "meta": {
+    "instanceId": "bb94d622014afcf5d027fdb54d42515d8fe73fc160b7003f44dd0d754afc6e60"
+  },
+  "id": "YDvyGrKxlinmxzYd",
+  "tags": []
+}
