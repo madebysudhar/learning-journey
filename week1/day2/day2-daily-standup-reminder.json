@@ -1,0 +1,155 @@
+{
+  "name": "Day 2 - Daily Standup Reminder",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        -64
+      ],
+      "id": "fd35948d-7d82-4704-a110-9036f47b6717",
+      "name": "Schedule Trigger",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $now }}",
+        "format": "custom",
+        "customFormat": "=cccc",
+        "outputFieldName": "=day",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        176,
+        -64
+      ],
+      "id": "502f6147-3583-43f3-9aaa-dc195e1cfb85",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "14653198-b1f7-433a-a65d-2b3e384dc486",
+              "leftValue": "={{ [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\"].includes($json.day.trim()) }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        384,
+        -64
+      ],
+      "id": "4a66fa85-1c82-403a-ad7a-042cdc97f360",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C09L05U8R32",
+          "mode": "list",
+          "cachedResultName": "all-lynqai"
+        },
+        "text": "={{ $('Date & Time').item.json.day }}\n\n⏰ Daily Stand-up Reminder – Please share your updates in #standup!",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        592,
+        -160
+      ],
+      "id": "56ccd0b0-1b77-4eba-b27e-2cb8c011b80f",
+      "name": "Send a message",
+      "webhookId": "da194b1a-a15b-4596-b42d-875b17e01f93",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "OJg6yJBG6o6sbWEu",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2789299b-ecdf-4522-80ce-773d0e74d884",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bb94d622014afcf5d027fdb54d42515d8fe73fc160b7003f44dd0d754afc6e60"
+  },
+  "id": "rbixfAphFnVjhCZ4",
+  "tags": []
+}

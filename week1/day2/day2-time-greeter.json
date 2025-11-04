@@ -1,0 +1,251 @@
+{
+  "name": "Day 2 - Time Greeter",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -32,
+        -64
+      ],
+      "id": "0dead433-c235-4cfb-87b6-b2e373cf8e67",
+      "name": "Schedule Trigger",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $now }}",
+        "format": "custom",
+        "customFormat": "HH",
+        "outputFieldName": "=hour",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        176,
+        -64
+      ],
+      "id": "f26d5f71-1338-4b86-8498-5bb9c68d270a",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "14653198-b1f7-433a-a65d-2b3e384dc486",
+              "leftValue": "={{ Number($json.hour) }}",
+              "rightValue": 12,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        384,
+        -64
+      ],
+      "id": "48ee2f35-7e07-4595-b740-03cd58f3fdb4",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0d19ef8c-97ed-47fb-b537-fb1c35c7dd67",
+              "name": "Message",
+              "value": "=Good Morning the time is {{ $json.hour }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        -160
+      ],
+      "id": "ef01e55c-9582-4245-8b45-ed92a4b45cb3",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7509e888-3c8a-49fb-94b5-fcc836996e1c",
+              "leftValue": "={{ Number($json.hour) }}",
+              "rightValue": 17,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        592,
+        32
+      ],
+      "id": "6c82d2d4-f47f-491c-9787-5f61446b2e8a",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "775ebfe3-22e4-4858-8c8e-f1d0d7b2b5be",
+              "name": "Messge",
+              "value": "=Good Afternoon the time is {{ $json.hour }} from n8n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        -64
+      ],
+      "id": "7ab8a7e7-fb6b-4cd2-8ddd-94ed1ee33d10",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cc55b51c-fe26-4346-bab2-d0fa185d40a2",
+              "name": "Message",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        128
+      ],
+      "id": "8dd81a55-4d6d-4d93-a741-9ea4c6117ce5",
+      "name": "Edit Fields2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "055b0ba9-8b51-4493-ac99-591bf7fa8297",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bb94d622014afcf5d027fdb54d42515d8fe73fc160b7003f44dd0d754afc6e60"
+  },
+  "id": "fzAKRsPmthXTj4Pq",
+  "tags": []
+}
