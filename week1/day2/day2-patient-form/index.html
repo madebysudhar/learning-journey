@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Information Form</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Patient Information Form</h2>
+
+    <!-- The form element groups inputs and supports submit -->
+    <form id="patientForm" novalidate>
+      <label for="name">Name</label>
+      <input id="name" type="text" placeholder="Enter full name" />
+
+      <label for="age">Age</label>
+      <input id="age" type="number" min="0" step="1" placeholder="Enter age" />
+
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="name@example.com" />
+
+      <label for="symptom">Symptoms</label>
+      <textarea id="symptom" rows="4" placeholder="Describe symptoms..."></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- Where we’ll show validation messages -->
+    <p id="message" class="hidden"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
